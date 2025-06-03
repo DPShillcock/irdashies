@@ -69,6 +69,16 @@ export const defaultDashboard: DashboardLayout = {
         height: 380,
       },
     },
+      {
+      id: 'fuelCalculator',
+      enabled: true,
+      layout: {
+        x: 1000,
+        y: 1000,
+        width: 160,
+        height: 380,
+      },
+    },
     {
       id: 'fastercarsfrombehind',
       enabled: false,

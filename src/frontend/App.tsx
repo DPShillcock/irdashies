@@ -14,26 +14,25 @@ import { Settings } from './components/Settings/Settings';
 import { Relative } from './components/Standings/Relative';
 import { Weather } from './components/Weather';
 import { TrackMap } from './components/TrackMap/TrackMap';
-import { FasterCarsFromBehind } from './components/FasterCarsFromBehind/FasterCarsFromBehind';
 import { EditMode } from './components/EditMode/EditMode';
-import { ThemeManager } from './components/ThemeManager/ThemeManager';
+import { FuelCalculator } from './components/FuelCalculator/FuelCalculator';
+
 
 // TODO: type this better, right now the config comes from settings
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const WIDGET_MAP: Record<string, (config: any) => React.JSX.Element> = {
+const WIDGET_MAP: Record<string, (config: any) => JSX.Element> = {
   standings: Standings,
   input: Input,
   relative: Relative,
   settings: Settings,
   map: TrackMap,
   weather: Weather,
-  fastercarsfrombehind: FasterCarsFromBehind,
+  fuelCalc: FuelCalculator,
 };
 
 const AppRoutes = () => {
   const { currentDashboard } = useDashboard();
   const { running } = useRunningState();
-
   return (
     <Routes>
       {currentDashboard?.widgets.map((widget) => {
@@ -50,7 +49,7 @@ const AppRoutes = () => {
           />
         );
       })}
-      <Route path="/settings/*" element={<Settings />} />
+      <Route path="/settings" element={<Settings />} />
     </Routes>
   );
 };
@@ -62,9 +61,7 @@ const App = () => (
       <TelemetryProvider bridge={window.irsdkBridge} />
       <HashRouter>
         <EditMode>
-          <ThemeManager>
-            <AppRoutes />
-          </ThemeManager>
+          <AppRoutes />
         </EditMode>
       </HashRouter>
     </RunningStateProvider>
