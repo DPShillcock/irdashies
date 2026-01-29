@@ -518,6 +518,20 @@ export const defaultDashboard: DashboardLayout = {
       }
     },
     {
+      "id": "twitchchat",
+      "enabled": false,
+      "layout": {
+        "x": 378,
+        "y": 102,
+        "width": 800,
+        "height": 500
+      },
+      "config": {
+        "channel": '',
+        "oAuthKey": ''
+      }
+    },
+    {
       "id": "rejoin",
       "enabled": false,
       "layout": {

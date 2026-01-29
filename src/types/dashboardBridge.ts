@@ -21,4 +21,7 @@ export interface DashboardBridge {
   setAnalyticsOptOut: (optOut: boolean) => Promise<void>;
   stop: () => void;
   setAutoStart: (autoStart: boolean) => Promise<void>;
+  twitchChatConnect: (channel: string, token: string) => Promise<void>;
+  twitchChatDisconnect: () => Promise<void>;
+  twitchChatOnMessage: (msg: string) => Promise<void>;
 }

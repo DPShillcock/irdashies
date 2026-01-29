@@ -168,6 +168,14 @@ export interface RelativeWidgetSettings extends BaseWidgetSettings {
   };
 }
 
+export interface TwitchChatWidgetSettings extends BaseWidgetSettings {
+  config: {
+    channel: string;
+    oAuthKey: string;
+    background: { opacity: number };
+  };
+}
+
 export interface WeatherWidgetSettings extends BaseWidgetSettings {
   config: {
     background: { opacity: number };

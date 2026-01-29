@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, shell } from 'electron';
 import type {
   Session,
   Telemetry,
@@ -30,60 +30,74 @@ export function exposeBridge() {
   } as IrSdkBridge);
 
   contextBridge.exposeInMainWorld('dashboardBridge', {
-    onEditModeToggled: (callback: (value: boolean) => void) => {
-      ipcRenderer.on('editModeToggled', (_, value) => {
-        callback(value);
-      });
-    },
-    reloadDashboard: () => {
-      ipcRenderer.send('reloadDashboard');
-    },
-    dashboardUpdated: (callback: (value: DashboardLayout) => void) => {
-      ipcRenderer.on('dashboardUpdated', (_, value) => {
-        callback(value);
-      });
-    },
-    saveDashboard: (value: DashboardLayout, options?: SaveDashboardOptions) => {
-      ipcRenderer.send('saveDashboard', value, options);
-    },
-    resetDashboard: (resetEverything: boolean) => {
-      return ipcRenderer.invoke('resetDashboard', resetEverything);
-    },
-    toggleLockOverlays: () => {
-      return ipcRenderer.invoke('toggleLockOverlays');
-    },
-    getAppVersion: () => {
-      return ipcRenderer.invoke('getAppVersion');
-    },
-    toggleDemoMode: (value: boolean) => {
-      ipcRenderer.send('toggleDemoMode', value);
-    },
-    onDemoModeChanged: (callback: (value: boolean) => void) => {
-      ipcRenderer.on('demoModeChanged', (_, value) => {
-        callback(value);
-      });
-    },
-    saveGarageCoverImage: (buffer: Uint8Array) => {
-      return ipcRenderer.invoke('saveGarageCoverImage', Array.from(buffer));
-    },
-    getGarageCoverImageAsDataUrl: (imagePath: string) => {
-      return ipcRenderer.invoke('getGarageCoverImageAsDataUrl', imagePath);
-    },
-    getAnalyticsOptOut: () => {
-      return ipcRenderer.invoke('getAnalyticsOptOut');
-    },
-    setAnalyticsOptOut: (optOut: boolean) => {
-      return ipcRenderer.invoke('setAnalyticsOptOut', optOut);
-    },
-    stop: () => {
-      ipcRenderer.removeAllListeners('editModeToggled');
-      ipcRenderer.removeAllListeners('dashboardUpdated');
-      ipcRenderer.removeAllListeners('demoModeChanged');
-    },
+      onEditModeToggled: (callback: (value: boolean) => void) => {
+          ipcRenderer.on('editModeToggled', (_, value) => {
+              callback(value);
+          });
+      },
+      reloadDashboard: () => {
+          ipcRenderer.send('reloadDashboard');
+      },
+      dashboardUpdated: (callback: (value: DashboardLayout) => void) => {
+          ipcRenderer.on('dashboardUpdated', (_, value) => {
+              callback(value);
+          });
+      },
+      saveDashboard: (value: DashboardLayout, options?: SaveDashboardOptions) => {
+          ipcRenderer.send('saveDashboard', value, options);
+      },
+      resetDashboard: (resetEverything: boolean) => {
+          return ipcRenderer.invoke('resetDashboard', resetEverything);
+      },
+      toggleLockOverlays: () => {
+          return ipcRenderer.invoke('toggleLockOverlays');
+      },
+      getAppVersion: () => {
+          return ipcRenderer.invoke('getAppVersion');
+      },
+      toggleDemoMode: (value: boolean) => {
+          ipcRenderer.send('toggleDemoMode', value);
+      },
+      onDemoModeChanged: (callback: (value: boolean) => void) => {
+          ipcRenderer.on('demoModeChanged', (_, value) => {
+              callback(value);
+          });
+      },
+      saveGarageCoverImage: (buffer: Uint8Array) => {
+          return ipcRenderer.invoke('saveGarageCoverImage', Array.from(buffer));
+      },
+      getGarageCoverImageAsDataUrl: (imagePath: string) => {
+          return ipcRenderer.invoke('getGarageCoverImageAsDataUrl', imagePath);
+      },
+      getAnalyticsOptOut: () => {
+          return ipcRenderer.invoke('getAnalyticsOptOut');
+      },
+      setAnalyticsOptOut: (optOut: boolean) => {
+          return ipcRenderer.invoke('setAnalyticsOptOut', optOut);
+      },
+      stop: () => {
+          ipcRenderer.removeAllListeners('editModeToggled');
+          ipcRenderer.removeAllListeners('dashboardUpdated');
+          ipcRenderer.removeAllListeners('demoModeChanged');
+      },
 
-    setAutoStart: (enabled: boolean) => {
-      ipcRenderer.invoke('autostart:set', enabled);
-    },
+      setAutoStart: (enabled: boolean) => {
+          ipcRenderer.invoke('autostart:set', enabled);
+      },
 
-  } as DashboardBridge);
+      twitchChatConnect: (channel: string, token: string) => {
+          ipcRenderer.invoke("twitchChat-connect", channel, token);
+      },
+
+      twitchChatDisconnect: () => {
+          ipcRenderer.invoke("twitchChat-disconnect");
+      },
+
+      twitchChatOnMessage: (callback: (msg: any) => void) => {
+          const listener = (_: any, msg: any) => callback(msg);
+          ipcRenderer.on("chat-message", listener);
+
+          return () => ipcRenderer.removeListener("chat-message", listener);
+      },
+  } as unknown as DashboardBridge);
 }

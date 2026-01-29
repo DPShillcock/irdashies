@@ -1,5 +1,6 @@
 export * from './StandingsSettings';
 export * from './RelativeSettings';
+export * from './TwitchChatSettings';
 export * from './WeatherSettings';
 export * from './TrackMapSettings';
 export * from './FuelSettings';
