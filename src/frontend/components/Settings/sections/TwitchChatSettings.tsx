@@ -23,7 +23,7 @@ const migrateConfig = (savedConfig: unknown): TwitchChatWidgetSettings['config']
 };
 
 export const TwitchChatSettings = () => {
-  const { bridge, currentDashboard } = useDashboard();
+  const { currentDashboard } = useDashboard();
   const savedSettings = currentDashboard?.widgets.find(
     (w) => w.id === SETTING_ID
   ) as TwitchChatWidgetSettings | undefined;
@@ -35,13 +35,6 @@ export const TwitchChatSettings = () => {
   if (!currentDashboard) {
     return <>Loading...</>;
   }
-
-
-  /* Preparation for OAuth request
-  const handleGetNewOAuth = () => {
-    bridge.openExternal("https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=55sor7qpeoe4ptyin4jfkr22pm9yqt&scope=chat:read chat:edit&redirect_uri=http://localhost:3000/twitchchat/auth/callback");
-  };
-  */
 
   return (
     <BaseSettingsSection

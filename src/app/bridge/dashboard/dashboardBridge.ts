@@ -1,4 +1,4 @@
-import { app, ipcMain, shell } from 'electron';
+import { app, ipcMain } from 'electron';
 import type { DashboardBridge, DashboardLayout } from '@irdashies/types';
 import { onDashboardUpdated } from '../../storage/dashboardEvents';
 import { getDashboard, saveDashboard, resetDashboard, saveGarageCoverImage, getGarageCoverImageAsDataUrl } from '../../storage/dashboards';
@@ -65,8 +65,6 @@ export const dashboardBridge: DashboardBridge = {
       openAtLogin: enabled,
     });
   },
-  openExternal: (url: string) => shell.openExternal(url),
-
 };
 
 export async function publishDashboardUpdates(overlayManager: OverlayManager, analytics: Analytics) {

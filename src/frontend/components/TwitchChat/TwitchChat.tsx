@@ -1,11 +1,3 @@
-/**
- * Twitch Chat overlay
- * Displays messages from Twitch Chat
- */
-
-import {
-  useDashboard,
-} from '@irdashies/context';
 import { useTwitchChatSettings } from './hooks/useTwitchChatSettings';
 import { useTwitchChat } from "./hooks/useTwitchChat";
 
@@ -17,7 +9,6 @@ export interface TwitchChatDisplayProps {
 export const TwitchChat = ({
   background = { opacity: 85 },
 }: TwitchChatDisplayProps) => {
-  const { isDemoMode } = useDashboard();
   const settings = useTwitchChatSettings();
 
   const messages = useTwitchChat(settings?.config.channel);

@@ -13,12 +13,3 @@ export interface TwitchChatDemoData {
   oAuthKey: string;
 }
 
-// Demo data for twitch chat
-export const getDemoTwitchChatData = (settings: TwitchChatSettings | undefined): TwitchChatDemoData => {
-  const channel = 'irDashies';
-
-  return {
-    channel: channel,
-    oAuthKey: '',
-  };
-};
