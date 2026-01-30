@@ -91,25 +91,6 @@ export const TwitchChatSettings = () => {
               Name of Twitch channel
             </p>
           </div>
-
-          {/* Twitch OAuth key */}
-          <div className="space-y-2">
-            <label className="text-slate-300">
-              Twitch OAuth Key
-            </label>
-            <input
-              type="password"
-              value={settings.config.oAuthKey ?? ''}
-              onChange={(e) =>
-                handleConfigChange({ oAuthKey: e.target.value || '' })
-              }
-              className="w-full rounded border-gray-600 bg-gray-700 p-2 text-slate-300"
-            />
-            <p className="text-slate-400 text-sm">
-              OAuth Token for Twitch chat.
-            </p>
-
-          </div>
         </div>
       )}
     </BaseSettingsSection>
