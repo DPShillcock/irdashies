@@ -20,7 +20,7 @@ export function useTwitchChat(channel: string | undefined) {
             // Extract username from user.display and message text from message.text
             const username = event.user.display || event.user.login || "Unknown";
             const messageText = event.message.text || "";
-            
+
             if (messageText && username !== "Unknown") {
                 setMessages((prev) => [
                     ...prev,
