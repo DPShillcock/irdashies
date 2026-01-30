@@ -7,19 +7,20 @@ import {
   useDashboard,
 } from '@irdashies/context';
 import { useTwitchChatSettings } from './hooks/useTwitchChatSettings';
+import { useTwitchChat } from "./hooks/useTwitchChat";
 
 
 export interface TwitchChatDisplayProps {
   background: { opacity: number };
 }
 
-export const TwitchChat=({
+export const TwitchChat = ({
   background = { opacity: 85 },
 }: TwitchChatDisplayProps) => {
   const { isDemoMode } = useDashboard();
   const settings = useTwitchChatSettings();
 
-
+  const messages = useTwitchChat(settings?.config.channel);
   // If we don't have dashboard settings, hide
   if (!settings) return null;
   if (!settings.enabled) return null;
@@ -34,8 +35,12 @@ export const TwitchChat=({
       }
     >
 
-    {/*there will be message from chat*/}
-
+      {/*there will be message from chat*/}
+      {messages.map((m) => (
+        <div key={m.id} style={{ marginBottom: 8 }}>
+          <strong style={{ color: "#a970ff" }}>{m.user}</strong>: {m.text}
+        </div>
+      ))}
     </div>
   )
 };
